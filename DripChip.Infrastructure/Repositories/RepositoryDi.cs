@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace DripChip.Infrastructure.Repositories;
 
-public static class RepositoryDI
+public static class RepositoryDi
 {
     public static IServiceCollection AddRepositories(this IServiceCollection services) => services
         .AddScoped<IRepository<Animal, long>, EfRepository<Animal, long>>()
