@@ -1,4 +1,5 @@
-﻿using DripChip.Core.Entities;
+﻿using System.Reflection;
+using DripChip.Core.Entities;
 using DripChip.Core.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
@@ -30,5 +31,12 @@ public class ApplicationContext : DbContext
 
         var connStr = $"Server={pgHost};Port={pgPort};User Id={pgUser};Password={pgPass};Database={pgDb};";
         optionsBuilder.UseNpgsql(connStr);
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
 }
