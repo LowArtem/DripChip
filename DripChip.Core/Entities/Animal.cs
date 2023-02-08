@@ -5,7 +5,7 @@ namespace DripChip.Core.Entities;
 
 public class Animal : BaseEntity<long>
 {
-    public List<AnimalType> AnimalTypes { get; set; }
+    public virtual List<AnimalType> AnimalTypes { get; set; }
     public float Weight { get; set; }
     public float Length { get; set; }
     public float Height { get; set; }
@@ -25,12 +25,12 @@ public class Animal : BaseEntity<long>
     /// <summary>
     /// Location where the animal was chipped
     /// </summary>
-    public AnimalLocationPoint ChippingLocation { get; set; }
+    public virtual AnimalLocationPoint ChippingLocation { get; set; }
     
     /// <summary>
     /// Locations that the animal has visited
     /// </summary>
-    public List<VisitedLocation> VisitedLocations { get; set; }
+    public virtual List<VisitedLocation> VisitedLocations { get; set; }
     
     /// <summary>
     /// DateTime when the animal died (null if it's still alive)
