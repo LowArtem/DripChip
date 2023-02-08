@@ -26,7 +26,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Controllers" />
       <Folder Include="Dto" />
       <Folder Include="Extensions" />
       <Folder Include="Mappers" />

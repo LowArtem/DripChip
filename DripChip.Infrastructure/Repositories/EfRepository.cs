@@ -1,5 +1,6 @@
 ﻿using DripChip.Core.Entities.Abstract;
 using DripChip.Core.Interfaces;
+using DripChip.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace DripChip.Infrastructure.Repositories;
@@ -11,7 +12,7 @@ public class EfRepository<T, G> : IRepository<T, G> where T : BaseEntity<G>, new
     private readonly DbContext _context;
     private readonly DbSet<T> _Set;
 
-    public EfRepository(DbContext context)
+    public EfRepository(ApplicationContext context)
     {
         _context = context;
         _Set = context.Set<T>();
