@@ -6,6 +6,7 @@ namespace DripChip.Core.Interfaces;
 /// Data access object
 /// </summary>
 /// <typeparam name="T">entity type</typeparam>
+/// <typeparam name="G">entity key type</typeparam>
 public interface IRepository<T, G> where T : BaseEntity<G>, new()
 {
     /// <summary>Is there need to automatically save all changes</summary>
