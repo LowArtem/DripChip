@@ -35,28 +35,25 @@ public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSc
         if (!Request.Headers.ContainsKey("Authorization"))
             return AuthenticateResult.Fail("Missing Authorization Header");
 
-        User? user = null;
-        try
-        {
-            var authHeader = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]);
-            var credentialBytes = Convert.FromBase64String(authHeader.Parameter);
-            var credentials = Encoding.UTF8.GetString(credentialBytes).Split(new[] { ':' }, 2);
-            var email = credentials[0];
-            var password = credentials[1];
-            user = await _userService.AuthenticateAsync(email, password);
-        }
-        catch
-        {
-            return AuthenticateResult.Fail("Invalid authorization header");
-        }
+        
+        var authHeader = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]);
+        var credentialBytes = Convert.FromBase64String(authHeader.Parameter);
+        var credentials = Encoding.UTF8.GetString(credentialBytes).Split(new[] { ':' }, 2);
+        var email = credentials[0];
+        var password = credentials[1];
+        
+        var result = await _userService.Authenticate(email, password);
+   
+        if (!result.IsSuccess)   
+            return AuthenticateResult.Fail(result.Exception.Message);
 
-        if (user == null)
+        if (result.Value == null)
             return AuthenticateResult.Fail("Invalid email or password");
 
         var claims = new[]
         {
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new Claim(ClaimTypes.Email, user.Email),
+            new Claim(ClaimTypes.NameIdentifier, result.Value.Id.ToString()),
+            new Claim(ClaimTypes.Email, result.Value.Email),
         };
         var identity = new ClaimsIdentity(claims, Scheme.Name);
         var principal = new ClaimsPrincipal(identity);

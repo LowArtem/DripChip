@@ -1,8 +1,9 @@
 ﻿using DripChip.Core.Entities;
+using DripChip.Core.Extensions;
 
 namespace DripChip.Core.Services.Common;
 
 public interface IUserService
 {
-    Task<User?> AuthenticateAsync(string email, string password);
+    Task<Result<User?>> Authenticate(string email, string password);
 }
