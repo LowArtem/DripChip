@@ -4,5 +4,5 @@ namespace DripChip.Core.Entities;
 
 public class AnimalType : BaseEntity<long>
 {
-    public string Type { get; set; }
+    public string Type { get; set; } = null!;
 }
