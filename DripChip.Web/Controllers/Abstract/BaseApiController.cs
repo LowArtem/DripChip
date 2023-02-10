@@ -1,7 +1,7 @@
 ﻿using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DripChip.Web.Controllers;
+namespace DripChip.Web.Controllers.Abstract;
 
 [ApiController]
 [Route("api/[controller]")]
