@@ -1,15 +1,22 @@
 using DripChip.Infrastructure.Data;
 using DripChip.Infrastructure.Repositories;
+using DripChip.Infrastructure.Services;
+using DripChip.Web.Auth;
+using Microsoft.AspNetCore.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddDbContext<ApplicationContext>();
+
 builder.Services.AddRepositories();
+builder.Services.AddServices();
 builder.Services.AddControllers();
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddAuthentication("BasicAuthentication")
+    .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -22,6 +29,7 @@ app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
