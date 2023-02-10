@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
-using DripChip.Core.Entities;
+using DripChip.Core.RequestDto;
 using DripChip.Core.Services.Common;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -42,7 +42,7 @@ public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSc
         var email = credentials[0];
         var password = credentials[1];
         
-        var result = await _userService.Authenticate(email, password);
+        var result = await _userService.Authenticate(new UserRequestDto.Authenticate(email, password));
    
         if (!result.IsSuccess)   
             return AuthenticateResult.Fail(result.Exception.Message);
