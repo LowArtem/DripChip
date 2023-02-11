@@ -7,11 +7,11 @@ namespace DripChip.Infrastructure.Data;
 
 public class ApplicationContext : DbContext
 {
-    public virtual DbSet<User> Users { get; set; }
-    public virtual DbSet<AnimalLocationPoint> LocationPoints { get; set; }
-    public virtual DbSet<AnimalType> AnimalTypes { get; set; }
-    public virtual DbSet<VisitedLocation> VisitedLocations { get; set; }
-    public virtual DbSet<Animal> Animals { get; set; }
+    public virtual DbSet<User> Users { get; set; } = null!;
+    public virtual DbSet<AnimalLocationPoint> LocationPoints { get; set; } = null!;
+    public virtual DbSet<AnimalType> AnimalTypes { get; set; } = null!;
+    public virtual DbSet<VisitedLocation> VisitedLocations { get; set; } = null!;
+    public virtual DbSet<Animal> Animals { get; set; } = null!;
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
