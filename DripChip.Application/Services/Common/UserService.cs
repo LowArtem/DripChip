@@ -1,11 +1,12 @@
-﻿using DripChip.Core.Entities;
+﻿using DripChip.Application.Mappers;
+using DripChip.Core.Entities;
+using DripChip.Core.Exceptions;
 using DripChip.Core.Extensions;
 using DripChip.Core.Interfaces;
 using DripChip.Core.RequestDto;
 using DripChip.Core.Services.Common;
-using Microsoft.EntityFrameworkCore;
 
-namespace DripChip.Infrastructure.Services.Common;
+namespace DripChip.Application.Services.Common;
 
 public class UserService : IUserService
 {
@@ -23,12 +24,17 @@ public class UserService : IUserService
             return new ArgumentException("Credentials are null or empty");
         }
 
-        return await _userRepository.Items.FirstOrDefaultAsync(u =>
-            u.Email == credentials.Email && u.Password == credentials.Password);
+        return await Task.Run(() => _userRepository.Items.FirstOrDefault(u =>
+            u.Email == credentials.Email && u.Password == credentials.Password));
     }
 
-    public Task<Result<User?>> Registration(UserRequestDto.Registration user)
+    public async Task<Result<User>> Registration(UserRequestDto.Registration user)
     {
-        throw new NotImplementedException();
+        if (_userRepository.Items.Any(u => u.Email == user.Email))
+        {
+            return new EntityExistsException(nameof(User), user.Email);
+        }
+
+        return await _userRepository.AddAsync(ApplicationMapper.Mapper.Map<User>(user));
     }
 }

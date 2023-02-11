@@ -1,8 +1,8 @@
-﻿using DripChip.Core.Services.Common;
-using DripChip.Infrastructure.Services.Common;
+﻿using DripChip.Application.Services.Common;
+using DripChip.Core.Services.Common;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DripChip.Infrastructure.Services;
+namespace DripChip.Application.Services;
 
 public static class ServiceDi
 {

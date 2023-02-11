@@ -1,7 +1,9 @@
+using System.Reflection;
+using DripChip.Application.Services;
 using DripChip.Infrastructure.Data;
 using DripChip.Infrastructure.Repositories;
-using DripChip.Infrastructure.Services;
 using DripChip.Web.Auth;
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.OpenApi.Models;
 
@@ -10,6 +12,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddDbContext<ApplicationContext>();
+
+builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
 builder.Services.AddRepositories();
 builder.Services.AddServices();

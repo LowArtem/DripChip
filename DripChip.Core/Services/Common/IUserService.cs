@@ -8,5 +8,5 @@ public interface IUserService
 {
     Task<Result<User?>> Authenticate(UserRequestDto.Authenticate credentials);
 
-    Task<Result<User?>> Registration(UserRequestDto.Registration user);
+    Task<Result<User>> Registration(UserRequestDto.Registration user);
 }
