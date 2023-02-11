@@ -30,7 +30,12 @@ public class ApplicationContext : DbContext
         }
 
         var connStr = $"Server={pgHost};Port={pgPort};User Id={pgUser};Password={pgPass};Database={pgDb};";
-        optionsBuilder.UseNpgsql(connStr);
+        
+        optionsBuilder.UseNpgsql(connStr, builder =>
+        {
+            builder.MigrationsAssembly(typeof(ApplicationContext).GetTypeInfo().Assembly.GetName().Name);
+            builder.EnableRetryOnFailure(maxRetryCount: 10, maxRetryDelay: TimeSpan.FromSeconds(20), errorCodesToAdd: null);
+        });
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

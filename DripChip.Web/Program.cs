@@ -5,6 +5,7 @@ using DripChip.Infrastructure.Repositories;
 using DripChip.Web.Auth;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +13,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddDbContext<ApplicationContext>();
+
+using (ApplicationContext db = new ApplicationContext())
+{
+    db.Database.Migrate();
+}
 
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
