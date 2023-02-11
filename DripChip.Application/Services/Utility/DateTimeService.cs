@@ -1,4 +1,4 @@
-﻿namespace DripChip.Core.Services.Utility;
+﻿namespace DripChip.Application.Services.Utility;
 
 public static class DateTimeService
 {

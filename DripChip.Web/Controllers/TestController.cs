@@ -1,6 +1,6 @@
-﻿using DripChip.Core.Entities;
-using DripChip.Core.RequestDto;
-using DripChip.Core.Services.Common;
+﻿using DripChip.Application.Dto;
+using DripChip.Application.Services.Common;
+using DripChip.Core.Entities;
 using DripChip.Web.Controllers.Abstract;
 using DripChip.Web.Extensions;
 using Microsoft.AspNetCore.Authorization;
@@ -28,7 +28,7 @@ public class TestController : BaseApiController
     [HttpPost]
     [Route("/registration")]
     [AllowAnonymous]
-    public async Task<ActionResult<User>> Registration([FromBody] UserRequestDto.Registration user)
+    public async Task<ActionResult<UserResponseDto.Info>> Registration([FromBody] UserRequestDto.Registration user)
     {
         var result =  await _userService.Registration(user);
         return result.ToResponse();

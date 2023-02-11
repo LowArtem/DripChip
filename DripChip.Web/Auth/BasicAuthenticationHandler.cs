@@ -2,8 +2,8 @@
 using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
-using DripChip.Core.RequestDto;
-using DripChip.Core.Services.Common;
+using DripChip.Application.Dto;
+using DripChip.Application.Services.Common;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;

@@ -1,10 +1,9 @@
-﻿using DripChip.Application.Mappers;
+﻿using DripChip.Application.Dto;
+using DripChip.Application.Mappers;
 using DripChip.Core.Entities;
 using DripChip.Core.Exceptions;
 using DripChip.Core.Extensions;
 using DripChip.Core.Interfaces;
-using DripChip.Core.RequestDto;
-using DripChip.Core.Services.Common;
 
 namespace DripChip.Application.Services.Common;
 
@@ -17,24 +16,26 @@ public class UserService : IUserService
         _userRepository = userRepository;
     }
 
-    public async Task<Result<User?>> Authenticate(UserRequestDto.Authenticate credentials)
+    public async Task<Result<UserResponseDto.Info?>> Authenticate(UserRequestDto.Authenticate credentials)
     {
         if (string.IsNullOrEmpty(credentials.Email) || string.IsNullOrEmpty(credentials.Password))
         {
             return new ArgumentException("Credentials are null or empty");
         }
 
-        return await Task.Run(() => _userRepository.Items.FirstOrDefault(u =>
-            u.Email == credentials.Email && u.Password == credentials.Password));
+        var user = await Task.Run(() => _userRepository.Items.FirstOrDefault(
+            u => u.Email == credentials.Email && u.Password == credentials.Password));
+        return ApplicationMapper.Mapper.Map<UserResponseDto.Info>(user);
     }
 
-    public async Task<Result<User>> Registration(UserRequestDto.Registration user)
+    public async Task<Result<UserResponseDto.Info>> Registration(UserRequestDto.Registration user)
     {
         if (_userRepository.Items.Any(u => u.Email == user.Email))
         {
             return new EntityExistsException(nameof(User), user.Email);
         }
 
-        return await _userRepository.AddAsync(ApplicationMapper.Mapper.Map<User>(user));
+        var result = await _userRepository.AddAsync(ApplicationMapper.Mapper.Map<User>(user));
+        return ApplicationMapper.Mapper.Map<UserResponseDto.Info>(result);
     }
 }

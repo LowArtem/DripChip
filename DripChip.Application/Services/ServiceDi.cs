@@ -1,5 +1,4 @@
 ﻿using DripChip.Application.Services.Common;
-using DripChip.Core.Services.Common;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DripChip.Application.Services;
