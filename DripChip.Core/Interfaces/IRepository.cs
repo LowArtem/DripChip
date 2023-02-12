@@ -42,14 +42,6 @@ public interface IRepository<T, G> where T : BaseEntity<G>, new()
     List<T> GetAllUntracked();
 
     /// <summary>
-    /// Get items paged (to form page with specified amount of items) 
-    /// </summary>
-    /// <param name="from">count of items that must be skipped</param>
-    /// <param name="size">count of items on the page</param>
-    /// <returns>specified amount of items or empty list</returns>
-    IQueryable<T> GetAllPaged(int from = 0, int size = 10) => Items.Skip(from).Take(size);
-
-    /// <summary>
     /// Get item with given id asynchronously
     /// </summary>
     /// <param name="id">item id</param>

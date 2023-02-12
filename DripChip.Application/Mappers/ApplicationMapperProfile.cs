@@ -8,7 +8,11 @@ public class ApplicationMapperProfile : Profile
 {
     public ApplicationMapperProfile()
     {
-        CreateMap<User, UserRequestDto.Registration>().ReverseMap();
+        CreateMap<User, UserRequestDto.AccountManagement>();
+        
+        CreateMap<UserRequestDto.AccountManagement, User>()
+            .ForMember(dest => dest.Id, opt => opt.Ignore());
+        
         CreateMap<User, UserResponseDto.Info>();
     }
 }

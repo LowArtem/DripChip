@@ -28,7 +28,7 @@ public class TestController : BaseApiController
     [HttpPost]
     [Route("/registration")]
     [AllowAnonymous]
-    public async Task<ActionResult<UserResponseDto.Info>> Registration([FromBody] UserRequestDto.Registration user)
+    public async Task<ActionResult<UserResponseDto.Info>> Registration([FromBody] UserRequestDto.AccountManagement user)
     {
         var result =  await _userService.Registration(user);
         return result.ToResponse();

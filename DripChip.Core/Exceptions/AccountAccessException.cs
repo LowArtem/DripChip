@@ -12,4 +12,12 @@ public class AccountAccessException : Exception
         : base("Unable to access the source through this account")
     {
     }
+    
+    /// <summary>
+    /// Creating the exception
+    /// </summary>
+    public AccountAccessException(string message)
+        : base(message)
+    {
+    }
 }

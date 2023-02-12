@@ -64,8 +64,9 @@ public static class ControllerExtensions
             EntityExistsException => new ConflictObjectResult(result.Exception.Message),
             EntityNotFoundException => new NotFoundObjectResult(result.Exception.Message),
             ArgumentNullException => new BadRequestObjectResult(result.Exception.Message),
-            ValidationException => new BadRequestObjectResult(result.Exception.Message),
+            ArgumentException => new BadRequestObjectResult(result.Exception.Message),
             AuthenticationException => new UnauthorizedObjectResult(result.Exception.Message),
+            ValidationException => new BadRequestObjectResult(result.Exception.Message),
             AccountAccessException => new ContentResult { StatusCode = 403, Content = result.Exception!.Message },
             _ => new ContentResult { StatusCode = 500, Content = result.Exception!.Message }
         };
@@ -78,8 +79,9 @@ public static class ControllerExtensions
             EntityExistsException => new ConflictObjectResult(result.Exception.Message),
             EntityNotFoundException => new NotFoundObjectResult(result.Exception.Message),
             ArgumentNullException => new BadRequestObjectResult(result.Exception.Message),
-            ValidationException => new BadRequestObjectResult(result.Exception.Message),
+            ArgumentException => new BadRequestObjectResult(result.Exception.Message),
             AuthenticationException => new UnauthorizedObjectResult(result.Exception.Message),
+            ValidationException => new BadRequestObjectResult(result.Exception.Message),
             AccountAccessException => new ContentResult { StatusCode = 403, Content = result.Exception!.Message },
             _ => new ContentResult { StatusCode = 500, Content = result.Exception!.Message }
         };
