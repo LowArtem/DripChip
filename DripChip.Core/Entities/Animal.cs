@@ -16,11 +16,11 @@ public class Animal : BaseEntity<long>
     /// DateTime when the animal was chipped
     /// </summary>
     public DateTime ChippingDateTime { get; set; }
-    
+
     /// <summary>
-    /// User account identifier of user who chipped the animal
+    /// User who chipped the animal
     /// </summary>
-    public int ChipperId { get; set; }
+    public virtual User Chipper { get; set; } = null!;
     
     /// <summary>
     /// Location where the animal was chipped

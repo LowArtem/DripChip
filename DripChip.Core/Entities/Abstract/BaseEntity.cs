@@ -9,5 +9,5 @@ public abstract class BaseEntity<T>
     /// <summary>
     /// Unique entity identifier
     /// </summary>
-    public virtual T Id { get; protected set; }
+    public virtual T Id { get; set; }
 }
