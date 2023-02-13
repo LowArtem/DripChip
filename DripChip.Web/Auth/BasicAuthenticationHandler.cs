@@ -29,13 +29,14 @@ public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSc
     {
         // Skip authentication if endpoint has [AllowAnonymous] attribute
         var endpoint = Context.GetEndpoint();
-        if (endpoint?.Metadata?.GetMetadata<IAllowAnonymous>() != null)
+        var allowAnonymous = endpoint?.Metadata?.GetMetadata<IAllowAnonymous>() != null;
+
+        if (!Request.Headers.ContainsKey("Authorization") && !allowAnonymous)
+            return AuthenticateResult.Fail("Missing Authorization Header");
+        if (!Request.Headers.ContainsKey("Authorization") && allowAnonymous)
             return AuthenticateResult.NoResult();
 
-        if (!Request.Headers.ContainsKey("Authorization"))
-            return AuthenticateResult.Fail("Missing Authorization Header");
 
-        
         var authHeader = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]);
         var credentialBytes = Convert.FromBase64String(authHeader.Parameter);
         var credentials = Encoding.UTF8.GetString(credentialBytes).Split(new[] { ':' }, 2);
@@ -44,11 +45,21 @@ public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSc
         
         var result = await _userService.Authenticate(new UserRequestDto.Authenticate(email, password));
    
-        if (!result.IsSuccess)   
-            return AuthenticateResult.Fail(result.Exception.Message);
+        switch (result.IsSuccess)
+        {
+            case false when !allowAnonymous:
+                return AuthenticateResult.Fail(result.Exception.Message);
+            case false when allowAnonymous:
+                return AuthenticateResult.NoResult();
+        }
 
-        if (result.Value == null)
-            return AuthenticateResult.Fail("Invalid email or password");
+        switch (result.Value)
+        {
+            case null when !allowAnonymous:
+                return AuthenticateResult.Fail("Invalid email or password");
+            case null when allowAnonymous:
+                return AuthenticateResult.NoResult();
+        }
 
         var claims = new[]
         {
